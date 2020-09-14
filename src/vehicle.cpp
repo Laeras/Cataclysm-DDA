@@ -4199,7 +4199,8 @@ double vehicle::coeff_water_drag() const
         return 1250.0;
     }
     double hull_coverage = static_cast<double>( floating.size() ) / structure_indices.size();
-
+	double deep_hull_coverage = static_cast<double>( deep_floating.size() ) / structure_indices.size();
+	double deeper_hull_coverage = static_cast<double>( deeper_floating.size() ) / structure_indices.size();
     int tile_width = mount_max.y - mount_min.y + 1;
     double width_m = tile_to_width( tile_width );
 
@@ -4227,7 +4228,7 @@ double vehicle::coeff_water_drag() const
     // increase the streamlining as more of the boat is covered in boat boards
     double c_water_drag = 1.25 - hull_coverage;
     // hull height starts at 0.3m and goes up as you add more boat boards
-    hull_height = 0.3 + 0.5 * hull_coverage;
+    hull_height = 0.3 + 0.5 * hull_coverage + 1.0 * deep_hull_coverage + 1 * deeper_hull_coverage;
     // F_water_drag = c_water_drag * cross_area * 1/2 * water_density * v^2
     // coeff_water_resistance = c_water_drag * cross_area * 1/2 * water_density
     coefficient_water_resistance = c_water_drag * width_m * draft_m * 0.5 * water_density;
@@ -5575,6 +5576,8 @@ void vehicle::refresh()
     steering.clear();
     speciality.clear();
     floating.clear();
+	deep_floating.clear();
+	deeper_floating.clear();
     batteries.clear();
     fuel_containers.clear();
 
@@ -5630,6 +5633,12 @@ void vehicle::refresh()
 
         if( vpi.has_flag( VPFLAG_FLOATS ) ) {
             floating.push_back( p );
+        }
+		if( vpi.has_flag( VPFLAG_DEEPFLOATS ) ) {
+            deep_floating.push_back( p );
+        }
+		if( vpi.has_flag( VPFLAG_DEEPERFLOATS ) ) {
+            deeper_floating.push_back( p );
         }
 
         if( vp.part().is_unavailable() ) {

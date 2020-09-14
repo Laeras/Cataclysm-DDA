@@ -76,6 +76,8 @@ static const std::unordered_map<std::string, vpart_bitflags> vpart_bitflag_map =
     { "ROTOR", VPFLAG_ROTOR },
     { "ROTOR_SIMPLE", VPFLAG_ROTOR_SIMPLE },
     { "FLOATS", VPFLAG_FLOATS },
+	{ "DEEPFLOATS", VPFLAG_DEEPFLOATS },
+	{ "DEEPERFLOATS", VPFLAG_DEEPERFLOATS },
     { "DOME_LIGHT", VPFLAG_DOME_LIGHT },
     { "AISLE_LIGHT", VPFLAG_AISLE_LIGHT },
     { "ATOMIC_LIGHT", VPFLAG_ATOMIC_LIGHT },
